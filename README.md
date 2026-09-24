@@ -1,6 +1,6 @@
-# ganymede-ai
+# runcloud9-ai
 
-Python inference layer for Runcloud9 (`ganymede-brain`).
+Python inference layer for Runcloud9.
 
 ## Layout
 
@@ -21,7 +21,7 @@ GitHub Actions runs `pytest` on pull requests and pushes to `main`. No API keys;
 ## Local dev
 
 ```powershell
-cd ganymede-ai
+cd runcloud9-ai
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
@@ -32,8 +32,8 @@ uvicorn app.main:app --host 0.0.0.0 --port 5000
 ## Docker
 
 ```powershell
-docker build -t ganymede-brain .
-docker run --rm -p 5000:5000 ganymede-brain
+docker build -t runcloud9-ai .
+docker run --rm -p 5000:5000 runcloud9-ai
 ```
 
 ## Environment
@@ -43,4 +43,4 @@ docker run --rm -p 5000:5000 ganymede-brain
 | `BRAIN_MODEL` | `anthropic/claude-sonnet-4-20250514` | LiteLLM model id (not used in CI) |
 | `ANTHROPIC_API_KEY` | — | Required for real LLM calls (PR-21+) |
 
-Fixtures regenerate from `ganymede`: `go run scripts/gen_aicontext_fixtures.go`
+Fixtures regenerate from the Go API repo: `go run scripts/gen_aicontext_fixtures.go` (run from `ganymede/`).
