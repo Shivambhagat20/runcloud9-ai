@@ -1,23 +1,17 @@
-"""Post-mortem generation routes (stub until PR-21)."""
+"""Post-mortem generation routes."""
 
 from __future__ import annotations
 
 from fastapi import APIRouter
 
+from app.catalog import get_rules_catalog_client
 from app.models import AIContext, PostmortemResponse
+from app.postmortem import generate_postmortem
 
 router = APIRouter()
 
 
 @router.post("/postmortem", response_model=PostmortemResponse)
 def post_postmortem(context: AIContext) -> PostmortemResponse:
-    """Accept AIContext and return a stub response. Real LLM wiring lands in PR-21."""
-    return PostmortemResponse(
-        status="stub",
-        claims=[],
-        summary="Post-mortem generation not implemented yet.",
-        schema_version=context.schema_version,
-        catalog_version=context.catalog_version,
-        prompt_version="stub-v0",
-        model="none",
-    )
+    """Accept AIContext and return structured claims (LLM when API key is set)."""
+    return generate_postmortem(context, get_rules_catalog_client())

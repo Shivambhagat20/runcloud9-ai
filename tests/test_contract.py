@@ -49,12 +49,13 @@ def test_models_ignores_unknown_fields() -> None:
 
 
 @pytest.mark.parametrize("fixture_path", FIXTURE_PATHS, ids=lambda p: p.stem)
-def test_postmortem_stub_accepts_fixture(fixture_path: Path, client: TestClient) -> None:
+def test_postmortem_accepts_fixture_without_llm(fixture_path: Path, client: TestClient) -> None:
     raw = json.loads(fixture_path.read_text(encoding="utf-8"))
     response = client.post("/postmortem", json=raw)
     assert response.status_code == 200
     body = response.json()
-    assert body["status"] == "stub"
+    assert body["status"] == "skipped"
     assert body["claims"] == []
     assert body["schemaVersion"] == raw["schemaVersion"]
     assert body["catalogVersion"] == raw["catalogVersion"]
+    assert body["promptVersion"] == "postmortem-v1"
