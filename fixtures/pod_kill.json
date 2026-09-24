@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2",
+  "sessionId": "pod_kill",
+  "runs": [
+    {
+      "role": "baseline",
+      "designConfig": {
+        "Template": "social-feed",
+        "Roles": {
+          "cache": [
+            {
+              "ID": "cache1",
+              "Type": "cache",
+              "Engine": "",
+              "Settings": {
+                "cacheStrategy": "cache-aside"
+              }
+            }
+          ],
+          "db": [
+            {
+              "ID": "db1",
+              "Type": "db",
+              "Engine": "",
+              "Settings": {
+                "readConsistency": "replica",
+                "readReplicas": 2,
+                "replicationMode": "async"
+              }
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "ref": "fact:config:cache1.cacheStrategy",
+          "kind": "config",
+          "component": "cache",
+          "value": "cache-aside"
+        },
+        {
+          "ref": "fact:config:db1.readConsistency",
+          "kind": "config",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:config:db1.readReplicas",
+          "kind": "config",
+          "component": "db",
+          "value": 2
+        },
+        {
+          "ref": "fact:config:db1.replicationMode",
+          "kind": "config",
+          "component": "db",
+          "value": "async"
+        },
+        {
+          "ref": "fact:metric:app-server.errorRate.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0.2,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:app-server.requestRate.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 40,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:session.cache_hit_rate",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_query_rate",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_total_queries",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.error_rate",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0.2
+        },
+        {
+          "ref": "fact:metric:session.peak_p99_ms",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_rps",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 40
+        },
+        {
+          "ref": "fact:metric:session.storage_error_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_utilization_pct",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_hits",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_misses",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_requests",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:trajectory:app_error_rate",
+          "kind": "trajectory",
+          "component": "app-server",
+          "value": {
+            "direction": "up",
+            "first": 0,
+            "last": 0.2,
+            "samples": 2,
+            "slope": 0.0033333333333333335
+          }
+        },
+        {
+          "ref": "fact:trajectory:app_p99_ms",
+          "kind": "trajectory",
+          "component": "app-server",
+          "value": {
+            "direction": "flat",
+            "first": 0,
+            "last": 0,
+            "samples": 2,
+            "slope": 0
+          }
+        },
+        {
+          "ref": "fact:violation:pod_restart",
+          "kind": "violation",
+          "value": {
+            "id": "pod_restart",
+            "count": 1,
+            "detail": {
+              "value": "1"
+            }
+          }
+        },
+        {
+          "ref": "fact:rule:pod_restart",
+          "kind": "rule",
+          "value": {
+            "fired": true,
+            "ruleId": "pod_restart"
+          }
+        },
+        {
+          "ref": "fact:event:0",
+          "kind": "event",
+          "value": {
+            "ruleId": "pod_restart",
+            "source": "",
+            "title": "App pod restarted",
+            "type": "invariant"
+          },
+          "timestamp": "2026-05-01T12:01:00Z"
+        }
+      ],
+      "descriptors": [
+        {
+          "name": "errorRate",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "HTTP or worker errors per second",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "requestRate",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "HTTP or worker request rate",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        }
+      ],
+      "componentInternals": {
+        "app-server": {
+          "instances": [
+            {
+              "id": "app-server",
+              "type": "app-server",
+              "signals": {
+                "errorRate": 0.2,
+                "requestRate": 40
+              },
+              "freshness": {
+                "containerCpu": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "violations": [
+        {
+          "id": "pod_restart",
+          "count": 1,
+          "detail": {
+            "value": "1"
+          }
+        }
+      ],
+      "mechanisms": [
+        {
+          "id": "pod_restart_runtime",
+          "triggerRules": [
+            "pod_restart"
+          ],
+          "precondition": {},
+          "causalChain": [
+            "the container exits or fails health checks",
+            "Kubernetes increments restart count",
+            "traffic shifts while the pod recovers"
+          ],
+          "suggestion": "Inspect pod logs and relieve CPU, memory, or upstream health pressure."
+        }
+      ],
+      "events": [
+        {
+          "component": "",
+          "narrative": "",
+          "related": null,
+          "ruleId": "pod_restart",
+          "suggestion": "",
+          "timestamp": "2026-05-01T12:01:00Z",
+          "title": "App pod restarted",
+          "type": "invariant"
+        }
+      ],
+      "trajectories": {
+        "app_error_rate": {
+          "direction": "up",
+          "first": 0,
+          "last": 0.2,
+          "samples": 2,
+          "slope": 0.0033333333333333335
+        },
+        "app_p99_ms": {
+          "direction": "flat",
+          "first": 0,
+          "last": 0,
+          "samples": 2,
+          "slope": 0
+        }
+      }
+    }
+  ]
+}

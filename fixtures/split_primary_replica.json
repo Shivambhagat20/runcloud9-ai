@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2",
+  "sessionId": "split_primary_replica",
+  "runs": [
+    {
+      "role": "baseline",
+      "designConfig": {
+        "Template": "social-feed",
+        "Roles": {
+          "db": [
+            {
+              "ID": "db1",
+              "Type": "db",
+              "Engine": "",
+              "Settings": {
+                "readConsistency": "replica",
+                "readReplicas": 2,
+                "replicationMode": "async"
+              }
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "ref": "fact:config:db1.readConsistency",
+          "kind": "config",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:config:db1.readReplicas",
+          "kind": "config",
+          "component": "db",
+          "value": 2
+        },
+        {
+          "ref": "fact:config:db1.replicationMode",
+          "kind": "config",
+          "component": "db",
+          "value": "async"
+        },
+        {
+          "ref": "fact:metric:db.cpuLimit.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 1,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:db.cpuUsage.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 0.4,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:session.cache_hit_rate",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_query_rate",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_total_queries",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.error_rate",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_p99_ms",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_rps",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_error_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_utilization_pct",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_hits",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_misses",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_requests",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:violation:partition_stale_reads",
+          "kind": "violation",
+          "component": "db",
+          "value": {
+            "id": "partition_stale_reads",
+            "count": 1,
+            "detail": {
+              "value": "1"
+            },
+            "causedBy": [
+              {
+                "role": "db",
+                "instance": "db1",
+                "key": "readConsistency",
+                "value": "replica"
+              },
+              {
+                "role": "db",
+                "instance": "db1",
+                "key": "readReplicas",
+                "value": 2
+              },
+              {
+                "role": "db",
+                "instance": "db1",
+                "key": "replicationMode",
+                "value": "async"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "fact:rule:partition_stale_reads",
+          "kind": "rule",
+          "component": "db",
+          "value": {
+            "fired": true,
+            "ruleId": "partition_stale_reads"
+          }
+        },
+        {
+          "ref": "fact:event:0",
+          "kind": "event",
+          "value": {
+            "ruleId": "partition_stale_reads",
+            "source": "",
+            "title": "Partition stale reads",
+            "type": "invariant"
+          },
+          "timestamp": "2026-05-01T12:01:00Z"
+        }
+      ],
+      "descriptors": [
+        {
+          "name": "cpuLimit",
+          "component": "db",
+          "unit": "count",
+          "semantic": "gauge",
+          "meaning": "configured CPU limit in cores",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "name": "cpuUsage",
+          "component": "db",
+          "unit": "percent",
+          "semantic": "gauge",
+          "meaning": "container CPU utilization",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        }
+      ],
+      "componentInternals": {
+        "db": {
+          "instances": [
+            {
+              "id": "db",
+              "type": "db",
+              "signals": {
+                "cpuLimit": 1,
+                "cpuUsage": 0.4
+              },
+              "engineExtras": {
+                "cpuSource": "metrics_api"
+              },
+              "freshness": {
+                "connections": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerCpu": {
+                  "tier": "metrics_api",
+                  "nominalLagSeconds": 45,
+                  "source": "metrics_api"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "replication": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "violations": [
+        {
+          "id": "partition_stale_reads",
+          "count": 1,
+          "detail": {
+            "value": "1"
+          },
+          "causedBy": [
+            {
+              "role": "db",
+              "instance": "db1",
+              "key": "readConsistency",
+              "value": "replica"
+            },
+            {
+              "role": "db",
+              "instance": "db1",
+              "key": "readReplicas",
+              "value": 2
+            },
+            {
+              "role": "db",
+              "instance": "db1",
+              "key": "replicationMode",
+              "value": "async"
+            }
+          ]
+        }
+      ],
+      "mechanisms": [
+        {
+          "id": "partition_stale_reads_async",
+          "triggerRules": [
+            "partition_stale_reads"
+          ],
+          "precondition": {
+            "role": "db",
+            "key": "replicationMode",
+            "anyOf": [
+              "async",
+              "semi-sync"
+            ]
+          },
+          "causalChain": [
+            "network partition or replica lag separates readers from the latest primary writes",
+            "replica reads continue while the primary keeps accepting writes",
+            "clients observe data older than their last write"
+          ],
+          "suggestion": "Tighten read consistency, reduce replica lag, or heal the partition before serving replica reads."
+        }
+      ],
+      "events": [
+        {
+          "component": "",
+          "narrative": "",
+          "related": null,
+          "ruleId": "partition_stale_reads",
+          "suggestion": "",
+          "timestamp": "2026-05-01T12:01:00Z",
+          "title": "Partition stale reads",
+          "type": "invariant"
+        }
+      ],
+      "trajectories": {}
+    }
+  ]
+}

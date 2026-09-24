@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2",
+  "sessionId": "split_app_store",
+  "runs": [
+    {
+      "role": "baseline",
+      "designConfig": {
+        "Template": "social-feed",
+        "Roles": {
+          "cache": [
+            {
+              "ID": "cache1",
+              "Type": "cache",
+              "Engine": "",
+              "Settings": {
+                "cacheStrategy": "write-through"
+              }
+            }
+          ],
+          "db": [
+            {
+              "ID": "db1",
+              "Type": "db",
+              "Engine": "",
+              "Settings": {
+                "readConsistency": "replica",
+                "readReplicas": 2,
+                "replicationMode": "async"
+              }
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "ref": "fact:config:cache1.cacheStrategy",
+          "kind": "config",
+          "component": "cache",
+          "value": "write-through"
+        },
+        {
+          "ref": "fact:config:db1.readConsistency",
+          "kind": "config",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:config:db1.readReplicas",
+          "kind": "config",
+          "component": "db",
+          "value": 2
+        },
+        {
+          "ref": "fact:config:db1.replicationMode",
+          "kind": "config",
+          "component": "db",
+          "value": "async"
+        },
+        {
+          "ref": "fact:metric:cache.cacheHitsLast9m.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 200,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.cacheMissesLast9m.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 20,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:db.cpuLimit.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 1,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:db.cpuUsage.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 0.35,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:session.cache_hit_rate",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_query_rate",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_total_queries",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.error_rate",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_p99_ms",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_rps",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_error_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_utilization_pct",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_hits",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_misses",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_requests",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:violation:cache_db_stale",
+          "kind": "violation",
+          "component": "cache",
+          "value": {
+            "id": "cache_db_stale",
+            "count": 1,
+            "detail": {
+              "value": "1"
+            },
+            "causedBy": [
+              {
+                "role": "cache",
+                "instance": "cache1",
+                "key": "cacheStrategy",
+                "value": "write-through"
+              }
+            ]
+          }
+        },
+        {
+          "ref": "fact:rule:cache_db_stale",
+          "kind": "rule",
+          "component": "cache",
+          "value": {
+            "fired": true,
+            "ruleId": "cache_db_stale"
+          }
+        },
+        {
+          "ref": "fact:event:0",
+          "kind": "event",
+          "value": {
+            "ruleId": "cache_db_stale",
+            "source": "",
+            "title": "Cache served stale value",
+            "type": "invariant"
+          },
+          "timestamp": "2026-05-01T12:01:00Z"
+        }
+      ],
+      "descriptors": [
+        {
+          "name": "cacheHitsLast9m",
+          "component": "cache",
+          "unit": "count",
+          "semantic": "counter",
+          "meaning": "session total cache hits",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cacheMissesLast9m",
+          "component": "cache",
+          "unit": "count",
+          "semantic": "counter",
+          "meaning": "session total cache misses",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cpuLimit",
+          "component": "db",
+          "unit": "count",
+          "semantic": "gauge",
+          "meaning": "configured CPU limit in cores",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "name": "cpuUsage",
+          "component": "db",
+          "unit": "percent",
+          "semantic": "gauge",
+          "meaning": "container CPU utilization",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        }
+      ],
+      "componentInternals": {
+        "cache": {
+          "instances": [
+            {
+              "id": "cache",
+              "type": "cache",
+              "signals": {
+                "cacheHitsLast9m": 200,
+                "cacheMissesLast9m": 20
+              },
+              "freshness": {
+                "containerCpu": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        },
+        "db": {
+          "instances": [
+            {
+              "id": "db",
+              "type": "db",
+              "signals": {
+                "cpuLimit": 1,
+                "cpuUsage": 0.35
+              },
+              "engineExtras": {
+                "cpuSource": "metrics_api"
+              },
+              "freshness": {
+                "connections": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerCpu": {
+                  "tier": "metrics_api",
+                  "nominalLagSeconds": 45,
+                  "source": "metrics_api"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "replication": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "violations": [
+        {
+          "id": "cache_db_stale",
+          "count": 1,
+          "detail": {
+            "value": "1"
+          },
+          "causedBy": [
+            {
+              "role": "cache",
+              "instance": "cache1",
+              "key": "cacheStrategy",
+              "value": "write-through"
+            }
+          ]
+        }
+      ],
+      "mechanisms": [
+        {
+          "id": "cache_db_stale_proxy",
+          "triggerRules": [
+            "cache_db_stale"
+          ],
+          "precondition": {
+            "role": "cache",
+            "key": "cacheStrategy",
+            "anyOf": [
+              "write-through",
+              "write-behind"
+            ]
+          },
+          "causalChain": [
+            "cache proxy serves a value from Redis",
+            "Postgres holds a newer truth for the same key",
+            "the client reads stale cache data relative to the database"
+          ],
+          "suggestion": "Verify write-through ordering, shorten write-behind flush intervals, or invalidate hot keys after writes."
+        }
+      ],
+      "events": [
+        {
+          "component": "",
+          "narrative": "",
+          "related": null,
+          "ruleId": "cache_db_stale",
+          "suggestion": "",
+          "timestamp": "2026-05-01T12:01:00Z",
+          "title": "Cache served stale value",
+          "type": "invariant"
+        }
+      ],
+      "trajectories": {}
+    }
+  ]
+}
