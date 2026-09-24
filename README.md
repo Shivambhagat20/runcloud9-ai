@@ -9,7 +9,9 @@ app/
   main.py              FastAPI on :5000, GET /health
   models.py            Pydantic mirror of Go AIContext (extra fields allowed)
   llm.py               LiteLLM wrapper (Claude default, model from env)
-  routes/postmortem.py POST /postmortem stub
+  routes/postmortem.py POST /postmortem structured claims
+  catalog.py           GET /meta/rules client with ETag cache
+  postmortem/          prompt + structured LLM output
 fixtures/              AIContext eval corpus (chaos scenarios)
 tests/test_contract.py Fixture parse + API smoke tests
 ```
@@ -41,6 +43,7 @@ docker run --rm -p 5000:5000 runcloud9-ai
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `BRAIN_MODEL` | `anthropic/claude-sonnet-4-20250514` | LiteLLM model id (not used in CI) |
-| `ANTHROPIC_API_KEY` | — | Required for real LLM calls (PR-21+) |
+| `ANTHROPIC_API_KEY` | — | Required for real LLM calls; CI omits it so `/postmortem` returns `skipped` |
+| `CLOUD9_API_URL` | `http://localhost:8080` | Base URL for `GET /meta/rules` when generating claims |
 
 Fixtures regenerate from the Go API repo: `go run scripts/gen_aicontext_fixtures.go` (run from `ganymede/`).

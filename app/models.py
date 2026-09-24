@@ -110,11 +110,40 @@ class AIContext(_ExtraModel):
     runs: list[Run] = Field(default_factory=list)
 
 
-class PostmortemResponse(_ExtraModel):
-    status: str = "stub"
-    claims: list[dict[str, Any]] = Field(default_factory=list)
+class ProposedMechanismClaim(_ExtraModel):
+    trigger: str
+    config_precondition: str | None = Field(default=None, alias="config_precondition")
+    precondition: Precondition | None = None
+    causal_chain: list[str] = Field(default_factory=list, alias="causalChain")
+
+
+class Claim(_ExtraModel):
+    scope: str
+    components: list[str] = Field(default_factory=list)
+    aspect: str
+    text: str
+    fact_refs: list[str] = Field(default_factory=list, alias="factRefs")
+    grounding: str
+    mechanism_id: str | None = Field(default=None, alias="mechanismId")
+    proposed_mechanism: ProposedMechanismClaim | None = Field(
+        default=None, alias="proposedMechanism"
+    )
+    confidence: str | None = None
+    observed_gap_seconds: float | None = Field(default=None, alias="observedGapSeconds")
+
+
+class PostmortemLLMOutput(_ExtraModel):
+    claims: list[Claim] = Field(default_factory=list)
     summary: str = ""
+    insufficient_evidence: list[str] = Field(default_factory=list, alias="insufficientEvidence")
+
+
+class PostmortemResponse(_ExtraModel):
+    status: str = "ok"
+    claims: list[Claim] = Field(default_factory=list)
+    summary: str = ""
+    insufficient_evidence: list[str] = Field(default_factory=list, alias="insufficientEvidence")
     schema_version: int = Field(default=1, alias="schemaVersion")
     catalog_version: str = Field(default="", alias="catalogVersion")
-    prompt_version: str = Field(default="stub-v0", alias="promptVersion")
+    prompt_version: str = Field(default="postmortem-v1", alias="promptVersion")
     model: str = Field(default="none")
