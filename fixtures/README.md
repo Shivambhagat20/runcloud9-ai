@@ -1,6 +1,6 @@
 # AIContext eval fixtures
 
-Synthetic `AIContext` payloads (schema v1) for ganymede-brain contract tests and offline eval. Each file is one chaos scenario (or a clean steady session) built via `ganymede/scripts/gen_aicontext_fixtures.go` and `api.BuildAIContext`.
+Synthetic `AIContext` payloads (schema v1) for runcloud9-ai contract tests and offline eval. Each file is one chaos scenario (or a clean steady session) built via `api.BuildAIContext` and the Go generator `scripts/gen_aicontext_fixtures.go`.
 
 Regenerate after schema or ledger changes:
 

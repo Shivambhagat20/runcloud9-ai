@@ -1,1 +1,1 @@
-"""ganymede-brain: FastAPI service composing over Go AIContext payloads."""
+"""runcloud9-ai: FastAPI service composing over Go AIContext payloads."""

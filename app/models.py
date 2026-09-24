@@ -1,4 +1,4 @@
-"""Pydantic mirror of ganymede/pkg/api AIContext JSON contract."""
+"""Pydantic mirror of the Go AIContext JSON contract (cloud9-api)."""
 
 from __future__ import annotations
 

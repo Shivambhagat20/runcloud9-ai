@@ -1,4 +1,4 @@
-"""LiteLLM wrapper for ganymede-brain."""
+"""LiteLLM wrapper for runcloud9-ai."""
 
 from __future__ import annotations
 
