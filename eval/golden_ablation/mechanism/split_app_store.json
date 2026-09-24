@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "scope": "pair",
+      "components": [
+        "db"
+      ],
+      "aspect": "why",
+      "text": "Inferred causal story without library row.",
+      "factRefs": [
+        "fact:rule:cache_db_stale"
+      ],
+      "grounding": "inferred",
+      "proposedMechanism": {
+        "trigger": "cache_db_stale",
+        "config_precondition": "cache.cacheStrategy in (write-through, write-behind)",
+        "causalChain": [
+          "cache proxy serves a value from Redis",
+          "Postgres holds a newer truth for the same key"
+        ]
+      }
+    }
+  ],
+  "summary": "Ablation golden.",
+  "insufficientEvidence": []
+}

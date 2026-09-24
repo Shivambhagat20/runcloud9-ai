@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "scope": "pair",
+      "components": [
+        "db"
+      ],
+      "aspect": "why",
+      "text": "Inferred causal story without library row.",
+      "factRefs": [
+        "fact:rule:partition_stale_reads"
+      ],
+      "grounding": "inferred",
+      "proposedMechanism": {
+        "trigger": "partition_stale_reads",
+        "config_precondition": "db.replicationMode in (async, semi-sync)",
+        "causalChain": [
+          "network partition or replica lag separates readers from the latest primary writes",
+          "replica reads continue while the primary keeps accepting writes"
+        ]
+      }
+    }
+  ],
+  "summary": "Ablation golden.",
+  "insufficientEvidence": []
+}

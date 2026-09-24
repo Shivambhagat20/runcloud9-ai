@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "fixtures": {
+    "clean": {
+      "negative": true,
+      "primary_rule": null,
+      "mechanism_id": null,
+      "expects_cross_scope": false
+    },
+    "pod_kill": {
+      "negative": false,
+      "primary_rule": "pod_restart",
+      "mechanism_id": "pod_restart_runtime",
+      "expects_cross_scope": false
+    },
+    "cache_flush": {
+      "negative": false,
+      "primary_rule": "cascade_cache_db",
+      "mechanism_id": "cascade_cache_db_fallthrough",
+      "expects_cross_scope": true
+    },
+    "stall_replica": {
+      "negative": false,
+      "primary_rule": "replica_cannot_catch_up",
+      "mechanism_id": "replica_cannot_catch_up",
+      "expects_cross_scope": false
+    },
+    "split_primary_replica": {
+      "negative": false,
+      "primary_rule": "partition_stale_reads",
+      "mechanism_id": "partition_stale_reads_async",
+      "expects_cross_scope": true
+    },
+    "split_app_store": {
+      "negative": false,
+      "primary_rule": "cache_db_stale",
+      "mechanism_id": "cache_db_stale_proxy",
+      "expects_cross_scope": true
+    },
+    "promote_replica": {
+      "negative": false,
+      "primary_rule": "failover_write_loss",
+      "mechanism_id": "async_promote_write_loss",
+      "expects_cross_scope": false
+    },
+    "promote_lagging_replica": {
+      "negative": false,
+      "primary_rule": "failover_write_loss",
+      "mechanism_id": "async_promote_write_loss",
+      "expects_cross_scope": false
+    },
+    "kill_replica": {
+      "negative": false,
+      "primary_rule": "replica_cannot_catch_up",
+      "mechanism_id": "replica_cannot_catch_up",
+      "expects_cross_scope": false
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": [
+        "db"
+      ],
+      "aspect": "why",
+      "text": "Inferred causal story without library row.",
+      "factRefs": [
+        "fact:rule:replica_cannot_catch_up"
+      ],
+      "grounding": "inferred",
+      "proposedMechanism": {
+        "trigger": "replica_cannot_catch_up",
+        "config_precondition": "db.readReplicas in (1, 2, 3, 4, 5)",
+        "causalChain": [
+          "primary WAL generation outpaces replica apply capacity",
+          "replication lag grows without recovering"
+        ]
+      }
+    }
+  ],
+  "summary": "Ablation golden.",
+  "insufficientEvidence": []
+}
