@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2",
+  "sessionId": "clean",
+  "runs": [
+    {
+      "role": "baseline",
+      "designConfig": {
+        "Template": "social-feed",
+        "Roles": {
+          "cache": [
+            {
+              "ID": "cache1",
+              "Type": "cache",
+              "Engine": "",
+              "Settings": {
+                "cacheStrategy": "cache-aside"
+              }
+            }
+          ],
+          "db": [
+            {
+              "ID": "db1",
+              "Type": "db",
+              "Engine": "",
+              "Settings": {
+                "readConsistency": "replica",
+                "readReplicas": 2,
+                "replicationMode": "async"
+              }
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "ref": "fact:config:cache1.cacheStrategy",
+          "kind": "config",
+          "component": "cache",
+          "value": "cache-aside"
+        },
+        {
+          "ref": "fact:config:db1.readConsistency",
+          "kind": "config",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:config:db1.readReplicas",
+          "kind": "config",
+          "component": "db",
+          "value": 2
+        },
+        {
+          "ref": "fact:config:db1.replicationMode",
+          "kind": "config",
+          "component": "db",
+          "value": "async"
+        },
+        {
+          "ref": "fact:metric:app-server.errorRate.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0.01,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:app-server.p99Latency.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0.04,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:app-server.requestRate.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 80,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.cacheHitsLast9m.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 800,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.cacheMissesLast9m.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 200,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:db.cpuLimit.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 1,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:db.cpuUsage.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 0.25,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:session.cache_hit_rate",
+          "kind": "metric",
+          "component": "cache",
+          "value": 80
+        },
+        {
+          "ref": "fact:metric:session.db_query_rate",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_total_queries",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.error_rate",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0.01
+        },
+        {
+          "ref": "fact:metric:session.peak_p99_ms",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 40
+        },
+        {
+          "ref": "fact:metric:session.peak_rps",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 80
+        },
+        {
+          "ref": "fact:metric:session.storage_error_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_utilization_pct",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_hits",
+          "kind": "metric",
+          "component": "cache",
+          "value": 800
+        },
+        {
+          "ref": "fact:metric:session.total_cache_misses",
+          "kind": "metric",
+          "component": "cache",
+          "value": 200
+        },
+        {
+          "ref": "fact:metric:session.total_requests",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        }
+      ],
+      "descriptors": [
+        {
+          "name": "errorRate",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "HTTP or worker errors per second",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "p99Latency",
+          "component": "app-server",
+          "unit": "ms",
+          "semantic": "latency",
+          "meaning": "p99 request latency in seconds",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "requestRate",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "HTTP or worker request rate",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cacheHitsLast9m",
+          "component": "cache",
+          "unit": "count",
+          "semantic": "counter",
+          "meaning": "session total cache hits",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cacheMissesLast9m",
+          "component": "cache",
+          "unit": "count",
+          "semantic": "counter",
+          "meaning": "session total cache misses",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cpuLimit",
+          "component": "db",
+          "unit": "count",
+          "semantic": "gauge",
+          "meaning": "configured CPU limit in cores",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "name": "cpuUsage",
+          "component": "db",
+          "unit": "percent",
+          "semantic": "gauge",
+          "meaning": "container CPU utilization",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        }
+      ],
+      "componentInternals": {
+        "app-server": {
+          "instances": [
+            {
+              "id": "app-server",
+              "type": "app-server",
+              "signals": {
+                "errorRate": 0.01,
+                "p99Latency": 0.04,
+                "requestRate": 80
+              },
+              "freshness": {
+                "containerCpu": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        },
+        "cache": {
+          "instances": [
+            {
+              "id": "cache",
+              "type": "cache",
+              "signals": {
+                "cacheHitsLast9m": 800,
+                "cacheMissesLast9m": 200
+              },
+              "freshness": {
+                "containerCpu": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        },
+        "db": {
+          "instances": [
+            {
+              "id": "db",
+              "type": "db",
+              "signals": {
+                "cpuLimit": 1,
+                "cpuUsage": 0.25
+              },
+              "engineExtras": {
+                "cpuSource": "metrics_api"
+              },
+              "freshness": {
+                "connections": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerCpu": {
+                  "tier": "metrics_api",
+                  "nominalLagSeconds": 45,
+                  "source": "metrics_api"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "replication": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "violations": [],
+      "mechanisms": null,
+      "events": [],
+      "trajectories": {}
+    }
+  ]
+}

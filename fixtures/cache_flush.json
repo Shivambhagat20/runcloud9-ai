@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2",
+  "sessionId": "cache_flush",
+  "runs": [
+    {
+      "role": "baseline",
+      "designConfig": {
+        "Template": "social-feed",
+        "Roles": {
+          "cache": [
+            {
+              "ID": "cache1",
+              "Type": "cache",
+              "Engine": "",
+              "Settings": {
+                "cacheStrategy": "cache-aside"
+              }
+            }
+          ],
+          "db": [
+            {
+              "ID": "db1",
+              "Type": "db",
+              "Engine": "",
+              "Settings": {
+                "readConsistency": "replica",
+                "readReplicas": 2,
+                "replicationMode": "async"
+              }
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "ref": "fact:config:cache1.cacheStrategy",
+          "kind": "config",
+          "component": "cache",
+          "value": "cache-aside"
+        },
+        {
+          "ref": "fact:config:db1.readConsistency",
+          "kind": "config",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:config:db1.readReplicas",
+          "kind": "config",
+          "component": "db",
+          "value": 2
+        },
+        {
+          "ref": "fact:config:db1.replicationMode",
+          "kind": "config",
+          "component": "db",
+          "value": "async"
+        },
+        {
+          "ref": "fact:metric:db.cpuLimit.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 1,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:db.cpuUsage.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 0.7,
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "ref": "fact:metric:db.dbQueryRate.last",
+          "kind": "metric",
+          "component": "db",
+          "value": 120,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:session.cache_hit_rate",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_query_rate",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.db_total_queries",
+          "kind": "metric",
+          "component": "db",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.error_rate",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_p99_ms",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.peak_rps",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_error_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_read_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_utilization_pct",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_latency_ms",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.storage_write_rate",
+          "kind": "metric",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_hits",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_cache_misses",
+          "kind": "metric",
+          "component": "cache",
+          "value": 0
+        },
+        {
+          "ref": "fact:metric:session.total_requests",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 0
+        },
+        {
+          "ref": "fact:trajectory:cache_hit_rate",
+          "kind": "trajectory",
+          "component": "cache",
+          "value": {
+            "direction": "down",
+            "first": 90.9090909090909,
+            "last": 2.4390243902439024,
+            "samples": 2,
+            "slope": -1.47450110864745
+          }
+        },
+        {
+          "ref": "fact:rule:cache_hit_low",
+          "kind": "rule",
+          "component": "cache",
+          "value": {
+            "fired": true,
+            "ruleId": "cache_hit_low"
+          }
+        },
+        {
+          "ref": "fact:rule:cascade_cache_db",
+          "kind": "rule",
+          "value": {
+            "fired": true,
+            "ruleId": "cascade_cache_db"
+          }
+        },
+        {
+          "ref": "fact:event:0",
+          "kind": "event",
+          "value": {
+            "ruleId": "cache_hit_low",
+            "source": "",
+            "title": "Low cache hit rate",
+            "type": "threshold"
+          },
+          "timestamp": "2026-05-01T12:00:00Z"
+        },
+        {
+          "ref": "fact:event:1",
+          "kind": "event",
+          "value": {
+            "ruleId": "cascade_cache_db",
+            "source": "",
+            "title": "Cache miss storm hit the database",
+            "type": "cascade"
+          },
+          "timestamp": "2026-05-01T12:01:00Z"
+        }
+      ],
+      "descriptors": [
+        {
+          "name": "cpuLimit",
+          "component": "db",
+          "unit": "count",
+          "semantic": "gauge",
+          "meaning": "configured CPU limit in cores",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "name": "cpuUsage",
+          "component": "db",
+          "unit": "percent",
+          "semantic": "gauge",
+          "meaning": "container CPU utilization",
+          "freshness": {
+            "tier": "metrics_api",
+            "nominalLagSeconds": 45,
+            "source": "metrics_api"
+          }
+        },
+        {
+          "name": "dbQueryRate",
+          "component": "db",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "instrumented SQL queries per second",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        }
+      ],
+      "componentInternals": {
+        "db": {
+          "instances": [
+            {
+              "id": "db",
+              "type": "db",
+              "signals": {
+                "cpuLimit": 1,
+                "cpuUsage": 0.7,
+                "dbQueryRate": 120
+              },
+              "engineExtras": {
+                "cpuSource": "metrics_api"
+              },
+              "freshness": {
+                "connections": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerCpu": {
+                  "tier": "metrics_api",
+                  "nominalLagSeconds": 45,
+                  "source": "metrics_api"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "replication": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "violations": [],
+      "mechanisms": [
+        {
+          "id": "cache_hit_low_fallthrough",
+          "triggerRules": [
+            "cache_hit_low"
+          ],
+          "precondition": {
+            "role": "cache",
+            "key": "cacheStrategy",
+            "anyOf": [
+              "cache-aside",
+              "write-through",
+              "write-behind"
+            ]
+          },
+          "causalChain": [
+            "working set exceeds effective cache capacity or TTL is too short",
+            "hit rate falls as keys are evicted or expire",
+            "more reads miss Redis and query Postgres directly"
+          ],
+          "suggestion": "Add Redis memory or cache capacity, tune TTL/eviction, or scale the cache tier."
+        },
+        {
+          "id": "cascade_cache_db_fallthrough",
+          "triggerRules": [
+            "cascade_cache_db"
+          ],
+          "precondition": {
+            "role": "cache",
+            "key": "cacheStrategy",
+            "anyOf": [
+              "cache-aside",
+              "write-through",
+              "write-behind"
+            ]
+          },
+          "causalChain": [
+            "cache hit rate drops between ticks",
+            "DB query rate rises in the same window",
+            "Postgres absorbs work that Redis previously served"
+          ],
+          "suggestion": "Enlarge the cache tier or tune eviction/TTL so hot keys stay resident."
+        }
+      ],
+      "events": [
+        {
+          "component": "",
+          "narrative": "",
+          "related": null,
+          "ruleId": "cascade_cache_db",
+          "suggestion": "",
+          "timestamp": "2026-05-01T12:01:00Z",
+          "title": "Cache miss storm hit the database",
+          "type": "cascade"
+        },
+        {
+          "component": "",
+          "narrative": "",
+          "related": null,
+          "ruleId": "cache_hit_low",
+          "suggestion": "",
+          "timestamp": "2026-05-01T12:00:00Z",
+          "title": "Low cache hit rate",
+          "type": "threshold"
+        }
+      ],
+      "trajectories": {
+        "cache_hit_rate": {
+          "direction": "down",
+          "first": 90.9090909090909,
+          "last": 2.4390243902439024,
+          "samples": 2,
+          "slope": -1.47450110864745
+        }
+      }
+    }
+  ]
+}
