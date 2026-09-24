@@ -1,0 +1,15 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": ["db"],
+      "aspect": "why",
+      "text": "A read replica could not catch up to the primary.",
+      "factRefs": ["fact:rule:replica_cannot_catch_up"],
+      "grounding": "authored",
+      "mechanismId": "replica_cannot_catch_up"
+    }
+  ],
+  "summary": "Replica lag blocked consistent reads.",
+  "insufficientEvidence": []
+}

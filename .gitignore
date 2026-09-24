@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Generated offline eval report (baseline gate uses eval/baseline.json)
+eval/report.json
+eval/ablation_report.json

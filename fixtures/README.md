@@ -36,4 +36,4 @@ Some fixtures include precursor threshold events that are not the root cause:
 
 - **Negative case:** `clean.json` — brain should abstain or describe steady state; no invented rule citations.
 - **Positive cases:** cite the primary rule and at least one config fact matching the config cause column.
-- **Ablation (PR-22):** withhold the mechanism row from context; recovery of `triggerRules` + `precondition` is pass/fail.
+- **Ablation:** withhold the mechanism row (`python -m eval.ablation_run`) or strip chaos-anchor facts; see `eval/ablation_score.py`.

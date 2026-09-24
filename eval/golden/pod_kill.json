@@ -1,0 +1,15 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": ["app-server"],
+      "aspect": "why",
+      "text": "The workload pod restarted under load.",
+      "factRefs": ["fact:rule:pod_restart"],
+      "grounding": "authored",
+      "mechanismId": "pod_restart_runtime"
+    }
+  ],
+  "summary": "Runtime restart disrupted the session.",
+  "insufficientEvidence": []
+}

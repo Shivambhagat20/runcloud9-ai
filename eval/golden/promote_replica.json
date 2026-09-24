@@ -1,0 +1,18 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": ["db"],
+      "aspect": "why",
+      "text": "Promoting an async standby lost in-flight writes.",
+      "factRefs": [
+        "fact:rule:failover_write_loss",
+        "fact:config:db1.replicationMode"
+      ],
+      "grounding": "authored",
+      "mechanismId": "async_promote_write_loss"
+    }
+  ],
+  "summary": "Failover exposed async replication risk.",
+  "insufficientEvidence": []
+}

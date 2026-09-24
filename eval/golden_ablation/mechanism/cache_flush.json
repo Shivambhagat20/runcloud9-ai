@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "scope": "pair",
+      "components": [
+        "cache"
+      ],
+      "aspect": "why",
+      "text": "Inferred causal story without library row.",
+      "factRefs": [
+        "fact:rule:cascade_cache_db"
+      ],
+      "grounding": "inferred",
+      "proposedMechanism": {
+        "trigger": "cascade_cache_db",
+        "config_precondition": "cache.cacheStrategy in (cache-aside, write-through, write-behind)",
+        "causalChain": [
+          "cache hit rate drops between ticks",
+          "DB query rate rises in the same window"
+        ]
+      }
+    }
+  ],
+  "summary": "Ablation golden.",
+  "insufficientEvidence": []
+}

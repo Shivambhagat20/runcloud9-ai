@@ -25,3 +25,9 @@ jobs:
 
       - name: Test
         run: pytest -q
+
+      - name: Offline eval (golden baseline)
+        run: python -m eval.run
+
+      - name: Offline ablation eval
+        run: python -m eval.ablation_run

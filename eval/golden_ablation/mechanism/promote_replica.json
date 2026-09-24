@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": [
+        "db"
+      ],
+      "aspect": "why",
+      "text": "Inferred causal story without library row.",
+      "factRefs": [
+        "fact:rule:failover_write_loss"
+      ],
+      "grounding": "inferred",
+      "proposedMechanism": {
+        "trigger": "failover_write_loss",
+        "config_precondition": "db.replicationMode in (async)",
+        "causalChain": [
+          "async replication lets the primary acknowledge before all standbys apply WAL",
+          "failover promotes a replica that lagged the fenced primary"
+        ]
+      }
+    }
+  ],
+  "summary": "Ablation golden.",
+  "insufficientEvidence": []
+}

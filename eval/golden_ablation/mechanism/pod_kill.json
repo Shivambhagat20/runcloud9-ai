@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": [
+        "cache"
+      ],
+      "aspect": "why",
+      "text": "Inferred causal story without library row.",
+      "factRefs": [
+        "fact:rule:pod_restart"
+      ],
+      "grounding": "inferred",
+      "proposedMechanism": {
+        "trigger": "pod_restart",
+        "config_precondition": null,
+        "causalChain": [
+          "the container exits or fails health checks",
+          "Kubernetes increments restart count"
+        ]
+      }
+    }
+  ],
+  "summary": "Ablation golden.",
+  "insufficientEvidence": []
+}

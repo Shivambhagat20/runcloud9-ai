@@ -1,0 +1,15 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": ["db"],
+      "aspect": "why",
+      "text": "Killing a replica left the fleet unable to catch up.",
+      "factRefs": ["fact:rule:replica_cannot_catch_up"],
+      "grounding": "authored",
+      "mechanismId": "replica_cannot_catch_up"
+    }
+  ],
+  "summary": "Replica loss increased lag.",
+  "insufficientEvidence": []
+}

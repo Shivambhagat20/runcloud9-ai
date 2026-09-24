@@ -18,7 +18,25 @@ tests/test_contract.py Fixture parse + API smoke tests
 
 ## CI
 
-GitHub Actions runs `pytest` on pull requests and pushes to `main`. No API keys; tests do not call the LLM.
+GitHub Actions runs `pytest` and the offline eval harness on pull requests and pushes to `main`. No API keys; tests do not call the LLM.
+
+## Offline eval
+
+Labelled chaos fixtures are scored against committed golden post-mortem outputs (no cluster):
+
+```powershell
+python -m eval.run
+```
+
+Metrics: root-cause accuracy, citation validity, hallucinated-fact rate, negative-case abstention, cross-scope coverage. CI fails if any metric regresses below `eval/baseline.json`.
+
+Mechanism and fact ablation (golden outputs, no LLM):
+
+```powershell
+python -m eval.ablation_run
+```
+
+Reports **mechanism recovery rate**, **fact ablation pass rate**, and **inferred claim precision** separately (`eval/ablation_baseline.json`).
 
 ## Local dev
 
