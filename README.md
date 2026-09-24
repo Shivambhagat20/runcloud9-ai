@@ -14,6 +14,10 @@ fixtures/              AIContext eval corpus (chaos scenarios)
 tests/test_contract.py Fixture parse + API smoke tests
 ```
 
+## CI
+
+GitHub Actions runs `pytest` on pull requests and pushes to `main`. No API keys; tests do not call the LLM.
+
 ## Local dev
 
 ```powershell
