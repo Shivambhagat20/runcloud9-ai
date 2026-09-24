@@ -1,0 +1,18 @@
+{
+  "claims": [
+    {
+      "scope": "topology",
+      "components": ["cache", "db", "app-server"],
+      "aspect": "why",
+      "text": "Partition let the cache proxy serve stale data relative to Postgres.",
+      "factRefs": [
+        "fact:rule:cache_db_stale",
+        "fact:config:cache1.cacheStrategy"
+      ],
+      "grounding": "authored",
+      "mechanismId": "cache_db_stale_proxy"
+    }
+  ],
+  "summary": "Cache and database diverged under partition.",
+  "insufficientEvidence": []
+}

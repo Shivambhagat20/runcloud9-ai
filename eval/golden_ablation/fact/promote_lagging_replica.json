@@ -1,0 +1,28 @@
+{
+  "claims": [
+    {
+      "scope": "component",
+      "components": [
+        "db"
+      ],
+      "aspect": "what",
+      "text": "Metrics show degradation after the incident window.",
+      "factRefs": [
+        "fact:rule:failover_write_loss"
+      ],
+      "grounding": "authored"
+    },
+    {
+      "scope": "topology",
+      "components": [],
+      "aspect": "insufficient_evidence",
+      "text": "Cannot attribute root cause without the chaos injection anchor.",
+      "factRefs": [],
+      "grounding": "abstained"
+    }
+  ],
+  "summary": "Symptoms only; why withheld.",
+  "insufficientEvidence": [
+    "chaos_inject"
+  ]
+}

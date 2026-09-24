@@ -1,0 +1,18 @@
+{
+  "claims": [
+    {
+      "scope": "pair",
+      "components": ["db", "app-server"],
+      "aspect": "why",
+      "text": "Partition exposed stale reads from async replicas.",
+      "factRefs": [
+        "fact:rule:partition_stale_reads",
+        "fact:config:db1.replicationMode"
+      ],
+      "grounding": "authored",
+      "mechanismId": "partition_stale_reads_async"
+    }
+  ],
+  "summary": "Split-brain reads violated expectations.",
+  "insufficientEvidence": []
+}

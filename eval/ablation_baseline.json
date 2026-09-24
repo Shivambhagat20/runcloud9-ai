@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "prompt_version": "postmortem-v1",
+  "metrics": {
+    "mechanism_recovery_rate": 1.0,
+    "fact_ablation_pass_rate": 1.0,
+    "inferred_claim_precision": 1.0
+  }
+}
