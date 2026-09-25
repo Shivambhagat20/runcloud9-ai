@@ -10,6 +10,7 @@ app/
   models.py            Pydantic mirror of Go AIContext (extra fields allowed)
   llm.py               LiteLLM wrapper (Claude default, model from env)
   routes/postmortem.py POST /postmortem structured claims
+  routes/reel.py       POST /reel/captions for Go-selected highlights
   catalog.py           GET /meta/rules client with ETag cache
   postmortem/          prompt + structured LLM output
 fixtures/              AIContext eval corpus (chaos scenarios)
