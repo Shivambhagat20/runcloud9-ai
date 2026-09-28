@@ -17,7 +17,8 @@
       "negative": false,
       "primary_rule": "cascade_cache_db",
       "mechanism_id": "cascade_cache_db_fallthrough",
-      "expects_cross_scope": true
+      "expects_cross_scope": true,
+      "required_fact_ref": "fact:derived:cache.opsPerAppRequest"
     },
     "stall_replica": {
       "negative": false,

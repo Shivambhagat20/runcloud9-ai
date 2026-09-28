@@ -70,6 +70,7 @@ def main(argv: list[str] | None = None) -> int:
             "total_refs": scored.total_refs,
             "negative_abstained": scored.negative_abstained,
             "cross_scope_hit": scored.cross_scope_hit,
+            "required_fact_cited": scored.required_fact_cited,
         }
 
     metrics = aggregate_metrics(scores, labels)

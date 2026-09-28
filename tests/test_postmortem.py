@@ -48,6 +48,8 @@ def test_build_messages_prefers_library_mechanisms() -> None:
     system = messages[0]["content"]
     assert "Prefer library mechanisms" in system
     assert "insufficient_evidence" in system
+    assert "cache-aside miss" in system.lower()
+    assert "fact:derived:cache.opsPerAppRequest" in system
 
 
 def test_parse_llm_payload_accepts_insufficient_evidence_claim() -> None:

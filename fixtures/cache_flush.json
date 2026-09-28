@@ -58,6 +58,199 @@
           "value": "async"
         },
         {
+          "ref": "fact:config:loadgen.mix.feed.userId",
+          "kind": "config",
+          "value": {
+            "method": "GET",
+            "pathTemplate": "/feed/{userId}",
+            "weight": 60
+          }
+        },
+        {
+          "ref": "fact:config:loadgen.mix.post",
+          "kind": "config",
+          "value": {
+            "method": "POST",
+            "pathTemplate": "/post",
+            "weight": 30
+          }
+        },
+        {
+          "ref": "fact:config:loadgen.mix.users.userId",
+          "kind": "config",
+          "value": {
+            "method": "GET",
+            "pathTemplate": "/users/{userId}",
+            "weight": 10
+          }
+        },
+        {
+          "ref": "fact:wiring:app1-\u003ecache1.balancing",
+          "kind": "wiring",
+          "component": "cache",
+          "value": "kube_service_per_connection"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003ecache1.CACHE_HOST",
+          "kind": "wiring",
+          "component": "cache",
+          "value": "cache"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003ecache1.CACHE_PORT",
+          "kind": "wiring",
+          "component": "cache",
+          "value": "6379"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003ecache1.CACHE_STRATEGY",
+          "kind": "wiring",
+          "component": "cache",
+          "value": "cache-aside"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.balancing",
+          "kind": "wiring",
+          "component": "db",
+          "value": "app_round_robin"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.readRoutingPolicy",
+          "kind": "wiring",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.DB_HOST",
+          "kind": "wiring",
+          "component": "db",
+          "value": "db"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.DB_NAME",
+          "kind": "wiring",
+          "component": "db",
+          "value": "syscrack"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.DB_PORT",
+          "kind": "wiring",
+          "component": "db",
+          "value": "5432"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.READ_CONSISTENCY",
+          "kind": "wiring",
+          "component": "db",
+          "value": "replica"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.READ_REPLICA_HOST",
+          "kind": "wiring",
+          "component": "db",
+          "value": "postgres-replica-0"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.READ_REPLICA_HOSTS",
+          "kind": "wiring",
+          "component": "db",
+          "value": "postgres-replica-0,postgres-replica-1"
+        },
+        {
+          "ref": "fact:wiring:app1-\u003edb1.READ_REPLICA_PORT",
+          "kind": "wiring",
+          "component": "db",
+          "value": "5432"
+        },
+        {
+          "ref": "fact:metric:app-server.cacheHits.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 10,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:app-server.cacheMisses.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 400,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:app-server.requestRate.last",
+          "kind": "metric",
+          "component": "app-server",
+          "value": 100,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.cacheHitsLast9m.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 10,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.cacheMissesLast9m.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 400,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.redisCmd.get.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 600,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.redisCmd.set.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 250,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "ref": "fact:metric:cache.redisOpsPerSec.last",
+          "kind": "metric",
+          "component": "cache",
+          "value": 850,
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
           "ref": "fact:metric:db.cpuLimit.last",
           "kind": "metric",
           "component": "db",
@@ -91,16 +284,54 @@
           }
         },
         {
+          "ref": "fact:derived:cache.readPathResidualOpsPerSec",
+          "kind": "derived",
+          "component": "cache",
+          "value": {
+            "expectedReadPathOpsPerSec": 1210,
+            "note": "residual after read-path model; writes and flusher GET/DEL can appear here",
+            "observedRequestPathOpsPerSec": 850,
+            "residualOpsPerSec": -360,
+            "window": "10s"
+          }
+        },
+        {
+          "ref": "fact:derived:cache.opsPerAppRequest",
+          "kind": "derived",
+          "component": "cache",
+          "value": {
+            "appRequestRate": 100,
+            "opsPerCompletedAppRequest": 8.5,
+            "requestPathRedisOpsPerSec": 850,
+            "window": "10s"
+          }
+        },
+        {
+          "ref": "fact:derived:cache.expectedOpsPerAppRequest",
+          "kind": "derived",
+          "component": "cache",
+          "value": {
+            "appRequestRate": 100,
+            "covers": "read_path",
+            "expectedReadPathOpsPerSec": 1210,
+            "hitRedisOpsPerRead": 1,
+            "missRedisOpsPerRead": 3,
+            "opsPerCompletedAppRequest": 12.1,
+            "source": "model",
+            "window": "10s"
+          }
+        },
+        {
           "ref": "fact:metric:session.cache_hit_rate",
           "kind": "metric",
           "component": "cache",
-          "value": 0
+          "value": 2.4390243902439024
         },
         {
           "ref": "fact:metric:session.db_query_rate",
           "kind": "metric",
           "component": "db",
-          "value": 0
+          "value": 120
         },
         {
           "ref": "fact:metric:session.db_total_queries",
@@ -124,7 +355,7 @@
           "ref": "fact:metric:session.peak_rps",
           "kind": "metric",
           "component": "app-server",
-          "value": 0
+          "value": 100
         },
         {
           "ref": "fact:metric:session.storage_error_rate",
@@ -160,13 +391,13 @@
           "ref": "fact:metric:session.total_cache_hits",
           "kind": "metric",
           "component": "cache",
-          "value": 0
+          "value": 10
         },
         {
           "ref": "fact:metric:session.total_cache_misses",
           "kind": "metric",
           "component": "cache",
-          "value": 0
+          "value": 400
         },
         {
           "ref": "fact:metric:session.total_requests",
@@ -224,9 +455,126 @@
             "type": "cascade"
           },
           "timestamp": "2026-05-01T12:01:00Z"
+        },
+        {
+          "ref": "fact:trace:req-cache-flush-sample",
+          "kind": "trace",
+          "value": {
+            "requestId": "req-cache-flush-sample",
+            "op": "GET /feed",
+            "durationMs": 52,
+            "spans": [
+              {
+                "component": "cache",
+                "op": "get",
+                "durationMs": 1
+              },
+              {
+                "component": "db",
+                "op": "query",
+                "durationMs": 44
+              }
+            ]
+          }
         }
       ],
       "descriptors": [
+        {
+          "name": "cacheHits",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "cache hits per second",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cacheMisses",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "cache misses per second",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "requestRate",
+          "component": "app-server",
+          "unit": "rps",
+          "semantic": "rate",
+          "meaning": "HTTP or worker request rate",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cacheHitsLast9m",
+          "component": "cache",
+          "unit": "count",
+          "semantic": "counter",
+          "meaning": "session total cache hits",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "cacheMissesLast9m",
+          "component": "cache",
+          "unit": "count",
+          "semantic": "counter",
+          "meaning": "session total cache misses",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "redisCmd.get",
+          "component": "cache",
+          "unit": "ops/s",
+          "semantic": "rate",
+          "meaning": "redis get command rate",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "redisCmd.set",
+          "component": "cache",
+          "unit": "ops/s",
+          "semantic": "rate",
+          "meaning": "redis set command rate",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
+        {
+          "name": "redisOpsPerSec",
+          "component": "cache",
+          "unit": "ops/s",
+          "semantic": "rate",
+          "meaning": "redis request-path command rate excluding SCAN",
+          "freshness": {
+            "tier": "rate",
+            "nominalLagSeconds": 15,
+            "source": "prometheus_rate"
+          }
+        },
         {
           "name": "cpuLimit",
           "component": "db",
@@ -265,6 +613,72 @@
         }
       ],
       "componentInternals": {
+        "app-server": {
+          "instances": [
+            {
+              "id": "app-server",
+              "type": "app-server",
+              "signals": {
+                "cacheHits": 10,
+                "cacheMisses": 400,
+                "requestRate": 100
+              },
+              "freshness": {
+                "containerCpu": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        },
+        "cache": {
+          "instances": [
+            {
+              "id": "cache",
+              "type": "cache",
+              "signals": {
+                "cacheHitsLast9m": 10,
+                "cacheMissesLast9m": 400,
+                "redisCmd.get": 600,
+                "redisCmd.set": 250,
+                "redisOpsPerSec": 850
+              },
+              "engineExtras": {
+                "cacheStrategy": "cache-aside",
+                "redisOpsPerSec": 850
+              },
+              "freshness": {
+                "containerCpu": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "containerMem": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                },
+                "throughput": {
+                  "tier": "rate",
+                  "nominalLagSeconds": 15,
+                  "source": "prometheus_rate"
+                }
+              }
+            }
+          ]
+        },
         "db": {
           "instances": [
             {

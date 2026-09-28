@@ -10,7 +10,7 @@ from app.catalog import RulesCatalogClient
 from app.llm import DEFAULT_MODEL, complete_json
 from app.models import AIContext, PostmortemLLMOutput, PostmortemResponse
 
-PROMPT_VERSION = "postmortem-v1"
+PROMPT_VERSION = "postmortem-v2"
 
 
 def generate_postmortem(
@@ -104,4 +104,15 @@ Rules:
 3. When evidence is too weak, emit aspect insufficient_evidence or grounding abstained rather than guessing.
 4. insufficient_evidence in the top-level array names signals or facts that would settle ambiguity.
 5. Do not cite rules that did not fire in this session.
+
+Fact kinds in the ledger:
+- derived: computed from live metrics. Treat fact:derived:cache.expectedOpsPerAppRequest as a read-path model only (payload source is model, covers read_path). fact:derived:cache.opsPerAppRequest is observed request-path Redis ops/s divided by completed app http_requests_total rate (not the loadgen target). fact:derived:cache.flusherOpsPerSec is SCAN rate for write-behind flushers; never fold it into ops per app request. fact:derived:cache.readPathResidualOpsPerSec is what remains after the read-path model (writes, flusher GET/DEL mixed into get/del, or commands outside the allowlist). fact:derived:db.readShare.<host> is each replica's share of rate(db_read_total[10s]); fact:derived:db.replicaReadImbalance is max share minus 1/n over that same window, not lifetime counter totals.
+- wiring: credential-free deploy env for how a node reaches DB, cache, or replicas (fact:wiring:<source>-><target>.<field>). Use with fact:config:loadgen.mix.<endpoint> to explain write traffic that does not fit the read-path cache model.
+- trace: bounded sampled request journeys (fact:trace:<requestId>) with span timings; cite when explaining a concrete slow or miss-heavy request path.
+
+Cache read-path model (do not invent command counts):
+- Cache-aside miss: two read commands plus one SET. Cache-aside hit: one read command.
+- Layered proxy (write-through or write-behind) miss: one GET plus one SET. Proxy hit: one GET.
+- Never describe a cache-aside miss as one GET plus one SET.
+- When observed and expected derived cache ops diverge, name only leftovers the facts support: write traffic, write-behind flusher GET/DEL mixed into get/del series, SCAN/flusher traffic, or allowlist gaps. Do not invent causes or Redis counts.
 """

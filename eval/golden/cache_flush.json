@@ -7,7 +7,8 @@
       "text": "Cache flush forced reads through to the database.",
       "factRefs": [
         "fact:rule:cascade_cache_db",
-        "fact:config:cache1.cacheStrategy"
+        "fact:config:cache1.cacheStrategy",
+        "fact:derived:cache.opsPerAppRequest"
       ],
       "grounding": "authored",
       "mechanismId": "cascade_cache_db_fallthrough"
