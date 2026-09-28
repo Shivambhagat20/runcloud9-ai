@@ -14,6 +14,7 @@ class FixtureLabel:
     primary_rule: str | None
     mechanism_id: str | None
     expects_cross_scope: bool
+    required_fact_ref: str | None = None
 
 
 @dataclass(frozen=True)
@@ -25,6 +26,7 @@ class FixtureScore:
     total_refs: int
     negative_abstained: bool | None
     cross_scope_hit: bool | None
+    required_fact_cited: bool | None
 
 
 def ledger_refs(context: AIContext) -> set[str]:
@@ -85,6 +87,13 @@ def _cross_scope_hit(claims: list[Claim]) -> bool:
     return False
 
 
+def _required_fact_cited(claims: list[Claim], fact_ref: str) -> bool:
+    for claim in claims:
+        if fact_ref in claim.fact_refs:
+            return True
+    return False
+
+
 def score_fixture(
     fixture_id: str,
     context: AIContext,
@@ -105,6 +114,7 @@ def score_fixture(
     root_hit: bool | None = None
     neg_abstain: bool | None = None
     cross_hit: bool | None = None
+    required_cited: bool | None = None
 
     if label.negative:
         neg_abstain = _negative_abstained(claims)
@@ -112,6 +122,8 @@ def score_fixture(
         root_hit = _root_cause_hit(claims, label)
         if label.expects_cross_scope:
             cross_hit = _cross_scope_hit(claims)
+        if label.required_fact_ref:
+            required_cited = _required_fact_cited(claims, label.required_fact_ref)
 
     return FixtureScore(
         fixture_id=fixture_id,
@@ -121,6 +133,7 @@ def score_fixture(
         total_refs=total_refs,
         negative_abstained=neg_abstain,
         cross_scope_hit=cross_hit,
+        required_fact_cited=required_cited,
     )
 
 
@@ -128,6 +141,7 @@ def aggregate_metrics(scores: list[FixtureScore], labels: dict[str, FixtureLabel
     positive = [s for s in scores if not labels[s.fixture_id].negative]
     negative = [s for s in scores if labels[s.fixture_id].negative]
     cross_scope = [s for s in scores if labels[s.fixture_id].expects_cross_scope]
+    required_fact = [s for s in scores if labels[s.fixture_id].required_fact_ref]
 
     root_acc = 0.0
     if positive:
@@ -150,12 +164,19 @@ def aggregate_metrics(scores: list[FixtureScore], labels: dict[str, FixtureLabel
     if cross_scope:
         cross_scope_coverage = sum(1 for s in cross_scope if s.cross_scope_hit) / len(cross_scope)
 
+    required_fact_citation = 0.0
+    if required_fact:
+        required_fact_citation = sum(1 for s in required_fact if s.required_fact_cited) / len(
+            required_fact
+        )
+
     return {
         "root_cause_accuracy": root_acc,
         "citation_validity": citation_validity,
         "hallucinated_fact_rate": hallucinated_rate,
         "negative_abstention": negative_abstention,
         "cross_scope_coverage": cross_scope_coverage,
+        "required_fact_citation": required_fact_citation,
     }
 
 
@@ -168,5 +189,6 @@ def load_labels(raw: dict[str, Any]) -> dict[str, FixtureLabel]:
             primary_rule=spec.get("primary_rule"),
             mechanism_id=spec.get("mechanism_id"),
             expects_cross_scope=bool(spec.get("expects_cross_scope")),
+            required_fact_ref=spec.get("required_fact_ref"),
         )
     return out

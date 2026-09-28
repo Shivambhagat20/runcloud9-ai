@@ -57,6 +57,7 @@ def test_aggregate_metrics_from_golden_dir() -> None:
     assert metrics["hallucinated_fact_rate"] == 0.0
     assert metrics["negative_abstention"] == 1.0
     assert metrics["cross_scope_coverage"] == 1.0
+    assert metrics["required_fact_citation"] == 1.0
 
 
 def test_clean_negative_abstention() -> None:

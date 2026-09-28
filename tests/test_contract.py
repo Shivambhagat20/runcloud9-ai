@@ -58,4 +58,4 @@ def test_postmortem_accepts_fixture_without_llm(fixture_path: Path, client: Test
     assert body["claims"] == []
     assert body["schemaVersion"] == raw["schemaVersion"]
     assert body["catalogVersion"] == raw["catalogVersion"]
-    assert body["promptVersion"] == "postmortem-v1"
+    assert body["promptVersion"] == "postmortem-v2"

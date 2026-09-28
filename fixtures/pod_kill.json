@@ -58,6 +58,33 @@
           "value": "async"
         },
         {
+          "ref": "fact:config:loadgen.mix.feed.userId",
+          "kind": "config",
+          "value": {
+            "method": "GET",
+            "pathTemplate": "/feed/{userId}",
+            "weight": 60
+          }
+        },
+        {
+          "ref": "fact:config:loadgen.mix.post",
+          "kind": "config",
+          "value": {
+            "method": "POST",
+            "pathTemplate": "/post",
+            "weight": 30
+          }
+        },
+        {
+          "ref": "fact:config:loadgen.mix.users.userId",
+          "kind": "config",
+          "value": {
+            "method": "GET",
+            "pathTemplate": "/users/{userId}",
+            "weight": 10
+          }
+        },
+        {
           "ref": "fact:metric:app-server.errorRate.last",
           "kind": "metric",
           "component": "app-server",
