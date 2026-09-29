@@ -21,6 +21,8 @@ tests/test_contract.py Fixture parse + API smoke tests
 
 GitHub Actions runs `pytest` and the offline eval harness on pull requests and pushes to `main`. No API keys; tests do not call the LLM.
 
+On push to `main`, after `test` passes, the **deploy** job builds the Docker image, pushes to `us-central1-docker.pkg.dev/runcloud9-505411/cloud9-images/runcloud9-ai`, applies `k8s/deployment.yaml`, and rolls out `runcloud9-ai` in GKE (`cloud9-system`). Requires the same GitHub secrets as the ganymede API deploy: `GCP_WORKLOAD_IDENTITY_PROVIDER` and `GCP_SERVICE_ACCOUNT`.
+
 ## Offline eval
 
 Labelled chaos fixtures are scored against committed golden post-mortem outputs (no cluster):
@@ -59,7 +61,7 @@ docker run --rm -p 5000:5000 runcloud9-ai
 
 ## Kubernetes
 
-`k8s/deployment.yaml` runs this service as `runcloud9-ai` in namespace `cloud9-system` (port 5000). Replace the image with the registry you publish to. Create the secret from `k8s/secrets.example.yaml` before apply. `CLOUD9_API_URL` must reach the control plane so the service can fetch `GET /meta/rules`.
+`k8s/deployment.yaml` runs this service as `runcloud9-ai` in namespace `cloud9-system` (port 5000). CI publishes the image to Artifact Registry and updates this deployment on merge to `main`. Create the API key secret once in the cluster (see `k8s/secrets.example.yaml`). `CLOUD9_API_URL` must reach the control plane so the service can fetch `GET /meta/rules`.
 
 The Go API sets `INFERENCE_URL=http://runcloud9-ai:5000` in its own manifests. Apply this file separately from the control-plane kustomize tree.
 
