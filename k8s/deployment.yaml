@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: runcloud9-ai
-          image: ghcr.io/your-org/runcloud9-ai:latest
+          image: us-central1-docker.pkg.dev/runcloud9-505411/cloud9-images/runcloud9-ai:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
