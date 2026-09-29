@@ -43,13 +43,13 @@ Reports **mechanism recovery rate**, **fact ablation pass rate**, and **inferred
 
 ## Local dev
 
+Uses [uv](https://docs.astral.sh/uv/) with `pyproject.toml` and a committed `uv.lock`.
+
 ```powershell
 cd runcloud9-ai
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-pytest
-uvicorn app.main:app --host 0.0.0.0 --port 5000
+uv sync --group dev
+uv run pytest
+uv run uvicorn app.main:app --host 0.0.0.0 --port 5000
 ```
 
 ## Docker
