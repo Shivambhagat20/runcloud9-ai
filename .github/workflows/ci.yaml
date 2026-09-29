@@ -13,24 +13,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-          cache: pip
-          cache-dependency-path: requirements.txt
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --frozen --group dev
 
       - name: Test
-        run: pytest -q
+        run: uv run pytest -q
 
       - name: Offline eval (golden baseline)
-        run: python -m eval.run
+        run: uv run python -m eval.run
 
       - name: Offline ablation eval
-        run: python -m eval.ablation_run
+        run: uv run python -m eval.ablation_run
 
   deploy:
     needs: test
