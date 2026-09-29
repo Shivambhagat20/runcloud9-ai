@@ -147,3 +147,35 @@ class PostmortemResponse(_ExtraModel):
     catalog_version: str = Field(default="", alias="catalogVersion")
     prompt_version: str = Field(default="postmortem-v1", alias="promptVersion")
     model: str = Field(default="none")
+
+
+class ChatTurn(_ExtraModel):
+    role: str
+    content: str
+
+
+class ChatRequest(_ExtraModel):
+    context: AIContext
+    messages: list[ChatTurn] = Field(default_factory=list)
+
+
+class ChatLLMOutput(_ExtraModel):
+    reply: str = ""
+    claims: list[Claim] = Field(default_factory=list)
+
+
+class TokenUsage(_ExtraModel):
+    prompt_tokens: int = Field(default=0, alias="promptTokens")
+    completion_tokens: int = Field(default=0, alias="completionTokens")
+    total_tokens: int = Field(default=0, alias="totalTokens")
+
+
+class ChatResponse(_ExtraModel):
+    status: str = "ok"
+    reply: str = ""
+    claims: list[Claim] = Field(default_factory=list)
+    usage: TokenUsage = Field(default_factory=TokenUsage)
+    schema_version: int = Field(default=1, alias="schemaVersion")
+    catalog_version: str = Field(default="", alias="catalogVersion")
+    prompt_version: str = Field(default="chat-v1", alias="promptVersion")
+    model: str = Field(default="none")
