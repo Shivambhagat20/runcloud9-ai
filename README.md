@@ -57,6 +57,17 @@ docker build -t runcloud9-ai .
 docker run --rm -p 5000:5000 runcloud9-ai
 ```
 
+## Kubernetes
+
+`k8s/deployment.yaml` runs this service as `runcloud9-ai` in namespace `cloud9-system` (port 5000). Replace the image with the registry you publish to. Create the secret from `k8s/secrets.example.yaml` before apply. `CLOUD9_API_URL` must reach the control plane so the service can fetch `GET /meta/rules`.
+
+The Go API sets `INFERENCE_URL=http://runcloud9-ai:5000` in its own manifests. Apply this file separately from the control-plane kustomize tree.
+
+```powershell
+kubectl apply -f k8s/secrets.example.yaml
+kubectl apply -f k8s/deployment.yaml
+```
+
 ## Environment
 
 | Variable | Default | Purpose |
