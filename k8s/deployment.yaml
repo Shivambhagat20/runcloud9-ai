@@ -28,18 +28,23 @@ spec:
               cpu: "500m"
               memory: "512Mi"
               ephemeral-storage: "100Mi"
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            periodSeconds: 10
+            failureThreshold: 18
           readinessProbe:
             httpGet:
               path: /health
               port: 5000
-            initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /health
               port: 5000
-            initialDelaySeconds: 15
             periodSeconds: 20
+            failureThreshold: 3
           env:
             - name: BRAIN_MODEL
               value: "anthropic/claude-haiku-5-5"
