@@ -74,7 +74,7 @@ kubectl apply -f k8s/deployment.yaml
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `BRAIN_MODEL` | `anthropic/claude-sonnet-4-20250514` | LiteLLM model id (not used in CI) |
+| `BRAIN_MODEL` | `anthropic/claude-haiku-5-5` | LiteLLM model id (not used in CI) |
 | `ANTHROPIC_API_KEY` | — | Required for real LLM calls; CI omits it so `/postmortem` returns `skipped` |
 | `CLOUD9_API_URL` | `http://localhost:8080` | Base URL for `GET /meta/rules` when generating claims |
 
