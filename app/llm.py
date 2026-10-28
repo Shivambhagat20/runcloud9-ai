@@ -7,7 +7,7 @@ from typing import Any
 
 from litellm import completion
 
-DEFAULT_MODEL = os.getenv("BRAIN_MODEL", "anthropic/claude-sonnet-4-20250514")
+DEFAULT_MODEL = os.getenv("BRAIN_MODEL", "anthropic/claude-haiku-5-5")
 
 
 def _usage_count(usage: Any, name: str) -> int:

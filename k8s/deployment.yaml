@@ -41,6 +41,8 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 20
           env:
+            - name: BRAIN_MODEL
+              value: "anthropic/claude-haiku-5-5"
             - name: CLOUD9_API_URL
               value: "http://cloud9-api"
             - name: ANTHROPIC_API_KEY
